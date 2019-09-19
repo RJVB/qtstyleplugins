@@ -7,7 +7,6 @@ It builds against Qt 5.9.8 and up (tested with 5.9.8 and 5.12.4).
 It will register as KFusion but also as Fusion, so that it replaces the built-in Fusion style in Qt builds where this style was disabled.
 
 Evolutions to follow:
-- add support for building via CMake
 - make the style respect the icons-in-buttons setting
-- optionally inherit KStyle from the KF5 plasma-framework
+- optionally inherit KStyle from the KF5 frameworkintegration framework
 

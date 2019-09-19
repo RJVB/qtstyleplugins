@@ -8,7 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 5)|greaterThan(QT_MINOR_VERSION, 7): \
 else: \
     QT += platformsupport-private
 
-TARGET = qaltfusionstyle
+TARGET = kfusionstyle
 
 HEADERS += \
         private/qstyleanimation_p.h \
