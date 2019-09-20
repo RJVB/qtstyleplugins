@@ -1,0 +1,6 @@
+add_subdirectory(integrationplugin)
+add_subdirectory(kstyle)
+add_subdirectory(infopage)
+if (BUILD_KPACKAGE_INSTALL_HANDLERS)
+	add_subdirectory(kpackage-install-handlers)
+endif()
