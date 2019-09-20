@@ -1,12 +1,15 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(KFusion)
 
 option(ENABLE_KDE
         "Add KDE support (the KFusion style will inherit KStyle)?"
         OFF)
+option(USE_PRIVATE_KSTYLE
+        "Use a private copy of the KStyle class"
+        ON)
 
-find_package(ECM 5.42.0  NO_MODULE)
+find_package(ECM 5.60.0  NO_MODULE)
 
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DIR}/cmake)
@@ -20,6 +23,7 @@ include(FeatureSummary)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 
 add_feature_info("Add KDE support (the KFusion style will inherit KStyle)" ENABLE_KDE "")
+add_feature_info("Use a private copy of the KStyle class (required as long as KStyle isn't updated)" USE_PRIVATE_KSTYLE "")
 
 set(QT_MIN_VERSION 5.9.0)
 
@@ -33,7 +37,7 @@ execute_process(COMMAND cmake/git_version.sh
 message(STATUS "KF5_VERSION=${KF5_VERSION}")
 
 if(ENABLE_KDE)
-    set(KF5_DEP_VERSION "5.42.0") # handled by release scripts
+    set(KF5_DEP_VERSION "5.60.0") # handled by release scripts
 
     include(ECMSetupVersion)
     ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KFUSION
@@ -41,7 +45,11 @@ if(ENABLE_KDE)
                       PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KFusionConfigVersion.cmake"
                       SOVERSION 5)
 
-    find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS FrameworkIntegration)
+    if (NOT USE_PRIVATE_KSTYLE)
+        find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS FrameworkIntegration)
+    else()
+        add_subdirectory(frameworkintegration)
+    endif()
     add_definitions(-DTRANSLATION_DOMAIN=\"kfusion\"
                     -DENABLE_KDE)
     if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")

@@ -21,7 +21,7 @@ configure_file(config-kstyle.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kstyle.h
 
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
-add_library(KF5Style kstyle.cpp)
+add_library(KF5Style STATIC kstyle.cpp)
 generate_export_header(KF5Style BASE_NAME KStyle)
 add_library(KF5::Style ALIAS KF5Style)
 
@@ -50,12 +50,12 @@ ecm_generate_headers(KStyle_HEADERS
   REQUIRED_HEADERS KStyle_HEADERS
 )
 
-install(TARGETS KF5Style
-        EXPORT KF5FrameworkIntegrationTargets
-        ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kstyle_export.h
-              ${KStyle_HEADERS}
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KStyle
-        COMPONENT Devel)
+# install(TARGETS KF5Style
+#         EXPORT KF5FrameworkIntegrationTargets
+#         ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+# 
+# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kstyle_export.h
+#               ${KStyle_HEADERS}
+#         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KStyle
+#         COMPONENT Devel)
 
