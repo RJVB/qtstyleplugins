@@ -389,7 +389,7 @@ QFusionStylePrivate::QFusionStylePrivate()
     Constructs a QFusionStyle object.
 */
 QFusionStyle::QFusionStyle()
-    : QCommonStyle(*new QFusionStylePrivate)
+    : FusionParentStyle(*new QFusionStylePrivate)
 {
     setObjectName(QLatin1String(STYLENAME));
 }
@@ -399,7 +399,8 @@ QFusionStyle::QFusionStyle()
 
     Constructs a QFusionStyle object.
 */
-QFusionStyle::QFusionStyle(QFusionStylePrivate &dd) : QCommonStyle(dd)
+QFusionStyle::QFusionStyle(QFusionStylePrivate &dd)
+    : FusionParentStyle(dd)
 {
 }
 
@@ -518,7 +519,7 @@ void QFusionStyle::drawPrimitive(PrimitiveElement elem,
             case QTabBar::TriangularWest:
             case QTabBar::TriangularSouth:
                 painter->restore();
-                QCommonStyle::drawPrimitive(elem, option, painter, widget);
+                FusionParentStyle::drawPrimitive(elem, option, painter, widget);
                 return;
             }
             painter->restore();
@@ -1000,7 +1001,7 @@ void QFusionStyle::drawPrimitive(PrimitiveElement elem,
         break;
 
     default:
-        QCommonStyle::drawPrimitive(elem, option, painter, widget);
+        FusionParentStyle::drawPrimitive(elem, option, painter, widget);
         break;
     }
 }
@@ -1500,7 +1501,7 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
             QColor highlightOutline = option->palette.highlight().color().darker(125);
             painter->fillRect(rect, option->palette.window());
 
-            QCommonStyle::drawControl(element, &item, painter, widget);
+            FusionParentStyle::drawControl(element, &item, painter, widget);
 
             bool act = mbi->state & State_Selected && mbi->state & State_Sunken;
             bool dis = !(mbi->state & State_Enabled);
@@ -1876,7 +1877,7 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
                 break;
             default:
                 painter->restore();
-                QCommonStyle::drawControl(element, tab, painter, widget);
+                FusionParentStyle::drawControl(element, tab, painter, widget);
                 return;
             }
 
@@ -1943,7 +1944,7 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
         break;
 #endif //QT_CONFIG(tabbar)
     default:
-        QCommonStyle::drawControl(element,option,painter,widget);
+        FusionParentStyle::drawControl(element,option,painter,widget);
         break;
     }
 }
@@ -3057,7 +3058,7 @@ void QFusionStyle::drawComplexControl(ComplexControl control, const QStyleOption
         break;
 #endif
     default:
-        QCommonStyle::drawComplexControl(control, option, painter, widget);
+        FusionParentStyle::drawComplexControl(control, option, painter, widget);
         break;
     }
 }
@@ -3179,7 +3180,7 @@ int QFusionStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, co
     case PM_DefaultFrameWidth:
         return 1; // Do not dpi-scale because the drawn frame is always exactly 1 pixel thick
     default:
-        return QCommonStyle::pixelMetric(metric, option, widget);
+        return FusionParentStyle::pixelMetric(metric, option, widget);
     }
     return QStyleHelper::dpiScaled(val);
 }
@@ -3190,7 +3191,7 @@ int QFusionStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, co
 QSize QFusionStyle::sizeFromContents(ContentsType type, const QStyleOption *option,
                                      const QSize &size, const QWidget *widget) const
 {
-    QSize newSize = QCommonStyle::sizeFromContents(type, option, size, widget);
+    QSize newSize = FusionParentStyle::sizeFromContents(type, option, size, widget);
     switch (type) {
     case CT_PushButton:
         if (const QStyleOptionButton *btn = qstyleoption_cast<const QStyleOptionButton *>(option)) {
@@ -3282,7 +3283,7 @@ QSize QFusionStyle::sizeFromContents(ContentsType type, const QStyleOption *opti
 */
 void QFusionStyle::polish(QApplication *app)
 {
-    QCommonStyle::polish(app);
+    FusionParentStyle::polish(app);
 }
 
 /*!
@@ -3290,7 +3291,7 @@ void QFusionStyle::polish(QApplication *app)
 */
 void QFusionStyle::polish(QWidget *widget)
 {
-    QCommonStyle::polish(widget);
+    FusionParentStyle::polish(widget);
     if (false
 #if QT_CONFIG(abstractbutton)
             || qobject_cast<QAbstractButton*>(widget)
@@ -3326,7 +3327,7 @@ void QFusionStyle::polish(QWidget *widget)
 */
 void QFusionStyle::polish(QPalette &pal)
 {
-    QCommonStyle::polish(pal);
+    FusionParentStyle::polish(pal);
 }
 
 /*!
@@ -3334,7 +3335,7 @@ void QFusionStyle::polish(QPalette &pal)
 */
 void QFusionStyle::unpolish(QWidget *widget)
 {
-    QCommonStyle::unpolish(widget);
+    FusionParentStyle::unpolish(widget);
     if (false
 #if QT_CONFIG(abstractbutton)
             || qobject_cast<QAbstractButton*>(widget)
@@ -3369,7 +3370,7 @@ void QFusionStyle::unpolish(QWidget *widget)
 */
 void QFusionStyle::unpolish(QApplication *app)
 {
-    QCommonStyle::unpolish(app);
+    FusionParentStyle::unpolish(app);
 }
 
 /*!
@@ -3378,7 +3379,7 @@ void QFusionStyle::unpolish(QApplication *app)
 QRect QFusionStyle::subControlRect(ComplexControl control, const QStyleOptionComplex *option,
                                    SubControl subControl, const QWidget *widget) const
 {
-    QRect rect = QCommonStyle::subControlRect(control, option, subControl, widget);
+    QRect rect = FusionParentStyle::subControlRect(control, option, subControl, widget);
 
     switch (control) {
 #if QT_CONFIG(slider)
@@ -3649,7 +3650,7 @@ QRect QFusionStyle::subControlRect(ComplexControl control, const QStyleOptionCom
 */
 QRect QFusionStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const
 {
-    return QCommonStyle::itemPixmapRect(r, flags, pixmap);
+    return FusionParentStyle::itemPixmapRect(r, flags, pixmap);
 }
 
 /*!
@@ -3658,7 +3659,7 @@ QRect QFusionStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pix
 void QFusionStyle::drawItemPixmap(QPainter *painter, const QRect &rect,
                                   int alignment, const QPixmap &pixmap) const
 {
-    QCommonStyle::drawItemPixmap(painter, rect, alignment, pixmap);
+    FusionParentStyle::drawItemPixmap(painter, rect, alignment, pixmap);
 }
 
 /*!
@@ -3667,7 +3668,7 @@ void QFusionStyle::drawItemPixmap(QPainter *painter, const QRect &rect,
 QStyle::SubControl QFusionStyle::hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
                                                        const QPoint &pt, const QWidget *w) const
 {
-    return QCommonStyle::hitTestComplexControl(cc, opt, pt, w);
+    return FusionParentStyle::hitTestComplexControl(cc, opt, pt, w);
 }
 
 /*!
@@ -3676,7 +3677,7 @@ QStyle::SubControl QFusionStyle::hitTestComplexControl(ComplexControl cc, const 
 QPixmap QFusionStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                           const QStyleOption *opt) const
 {
-    return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
+    return FusionParentStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 
 /*!
@@ -3753,13 +3754,13 @@ int QFusionStyle::styleHint(StyleHint hint, const QStyleOption *option, const QW
     default:
         break;
     }
-    return QCommonStyle::styleHint(hint, option, widget, returnData);
+    return FusionParentStyle::styleHint(hint, option, widget, returnData);
 }
 
 /*! \reimp */
 QRect QFusionStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidget *w) const
 {
-    QRect r = QCommonStyle::subElementRect(sr, opt, w);
+    QRect r = FusionParentStyle::subElementRect(sr, opt, w);
     switch (sr) {
     case SE_ProgressBarLabel:
     case SE_ProgressBarContents:
@@ -3808,7 +3809,7 @@ QIcon QFusionStyle::standardIcon(StandardPixmap standardIcon, const QStyleOption
         break;
     }
 #endif // imageformat_xpm
-    return QCommonStyle::standardIcon(standardIcon, option, widget);
+    return FusionParentStyle::standardIcon(standardIcon, option, widget);
 }
 
 /*!
@@ -3832,7 +3833,7 @@ QPixmap QFusionStyle::standardPixmap(StandardPixmap standardPixmap, const QStyle
     }
 #endif //QT_NO_IMAGEFORMAT_XPM
 
-    return QCommonStyle::standardPixmap(standardPixmap, opt, widget);
+    return FusionParentStyle::standardPixmap(standardPixmap, opt, widget);
 }
 
 QT_END_NAMESPACE

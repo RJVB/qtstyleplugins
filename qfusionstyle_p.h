@@ -60,10 +60,20 @@ QT_BEGIN_NAMESPACE
 
 #include "names.h"
 
+#ifdef ENABLE_KDE
+#include "kstyle.h"
+using FusionParentStyle = KStyle;
+#else
+using FusionParentStyle = QCommonStyle;
+#endif
+
 class QFusionStylePrivate;
-class Q_WIDGETS_EXPORT QFusionStyle : public QCommonStyle
+class Q_WIDGETS_EXPORT QFusionStyle : public FusionParentStyle
 {
     Q_OBJECT
+#ifdef ENABLE_KDE
+    Q_CLASSINFO("X-KDE-CustomElements", "true")
+#endif
     Q_DECLARE_PRIVATE(QFusionStyle)
 
 public:

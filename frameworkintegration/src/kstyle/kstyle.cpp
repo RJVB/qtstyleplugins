@@ -189,6 +189,13 @@ KStyle::KStyle() : d(new KStylePrivate)
 {
 }
 
+// cheap and easy: use 2 parallel d pointers, one for us, one for QCommonStyle.
+KStyle::KStyle(QCommonStylePrivate &dd)
+    : QCommonStyle(dd)
+    , d(new KStylePrivate)
+{
+}
+
 KStyle::~KStyle()
 {
     delete d;

@@ -40,6 +40,7 @@
 
 #include <kstyle_export.h>
 #include <qcommonstyle.h>
+#include <qcommonstyle_p.h>
 #include <QPalette>
 
 class KStylePrivate;
@@ -143,8 +144,12 @@ public:
     virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *option = nullptr,
                                const QWidget *widget = nullptr) const override;
 //@}
+
+protected:
+    KStyle(QCommonStylePrivate &dd);
+
 private:
-    KStylePrivate *const d;
+    KStylePrivate *const d = nullptr;
 };
 
 #endif //KDE_KSTYLE_H
