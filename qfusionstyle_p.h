@@ -52,7 +52,7 @@
 //
 
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
-#include <QtWidgets/qcommonstyle.h>
+#include "private/qcommonstyle.h"
 
 #include "private/qtcore-config.h"
 

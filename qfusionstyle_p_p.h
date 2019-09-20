@@ -52,8 +52,8 @@
 //
 
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
-#include <QtWidgets/qcommonstyle.h>
-#include <QtWidgets/private/qcommonstyle_p.h>
+#include "private/qcommonstyle.h"
+#include "private/qcommonstyle_p.h"
 #include <qpa/qplatformtheme.h>
 #include <QtGui/private/qguiapplication_p.h>
 

@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 
 project(KFusion)
 
-# option(ENABLE_KDE
-#         "Add KDE support (the KFusion style will inherit KStyle)?"
-#         OFF)
+option(ENABLE_KDE
+        "Add KDE support (the KFusion style will inherit KStyle)?"
+        OFF)
 
 find_package(ECM 5.42.0  NO_MODULE)
 
@@ -42,7 +42,8 @@ if(ENABLE_KDE)
                       SOVERSION 5)
 
     find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS FrameworkIntegration)
-    add_definitions(-DTRANSLATION_DOMAIN=\"kfusion\")
+    add_definitions(-DTRANSLATION_DOMAIN=\"kfusion\"
+                    -DENABLE_KDE)
     if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
         ki18n_install(po)
     endif()
@@ -74,6 +75,11 @@ target_include_directories(kfusionstyle PRIVATE
 target_link_libraries(kfusionstyle PRIVATE
     Qt5::Core
     Qt5::Widgets)
+if(ENABLE_KDE)
+    target_link_libraries(kfusionstyle PRIVATE
+        KF5::Style)
+endif()
+    
 
 install(TARGETS kfusionstyle DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/styles)
 

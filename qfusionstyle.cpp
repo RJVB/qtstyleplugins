@@ -388,7 +388,8 @@ QFusionStylePrivate::QFusionStylePrivate()
 /*!
     Constructs a QFusionStyle object.
 */
-QFusionStyle::QFusionStyle() : QCommonStyle(*new QFusionStylePrivate)
+QFusionStyle::QFusionStyle()
+    : QCommonStyle(*new QFusionStylePrivate)
 {
     setObjectName(QLatin1String(STYLENAME));
 }
