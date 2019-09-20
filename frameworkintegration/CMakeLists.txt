@@ -18,9 +18,9 @@ include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 
-include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
-include(KDECMakeSettings)
+# include(KDEInstallDirs)
+# include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+# include(KDECMakeSettings)
 
 set(REQUIRED_QT_VERSION 5.9.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Widgets)

@@ -36,6 +36,11 @@ execute_process(COMMAND cmake/git_version.sh
 )
 message(STATUS "KF5_VERSION=${KF5_VERSION}")
 
+string(REPLACE "-fapplication-extension" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+string(REPLACE "-Wzero-as-null-pointer-constant" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+
+remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_NO_CAST_FROM_ASCII)
+
 if(ENABLE_KDE)
     set(KF5_DEP_VERSION "5.60.0") # handled by release scripts
 
@@ -57,10 +62,6 @@ if(ENABLE_KDE)
     endif()
 endif()
 
-string(REPLACE "-fapplication-extension" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-string(REPLACE "-Wzero-as-null-pointer-constant" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-
-remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_NO_CAST_FROM_ASCII)
 add_definitions(-DQT_PLUGIN)
 
 set(kfusionstyle_SRCS

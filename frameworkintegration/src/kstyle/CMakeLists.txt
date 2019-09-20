@@ -26,6 +26,11 @@ generate_export_header(KF5Style BASE_NAME KStyle)
 add_library(KF5::Style ALIAS KF5Style)
 
 target_include_directories(KF5Style INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KStyle>")
+target_include_directories(KF5Style PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../private
+    ${Qt5Core_PRIVATE_INCLUDE_DIRS}
+    ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
+)
 
 target_link_libraries(KF5Style
     PUBLIC

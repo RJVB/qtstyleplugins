@@ -39,7 +39,7 @@
 #define KDE_KSTYLE_H
 
 #include <kstyle_export.h>
-#include <QCommonStyle>
+#include <qcommonstyle.h>
 #include <QPalette>
 
 class KStylePrivate;
