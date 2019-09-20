@@ -87,9 +87,13 @@ public:
     }
 
     // On mac we want a standard blue color used when the system palette is used
+    // However, in KDE context the test below probably accepts any palette "installed"
+    // from kdeglobals (via the platform integration plugin) as the "system palette",
+    // overshooting its goal.
+    // Instead, lets aim for cross-platform consistency.
     bool isMacSystemPalette(const QPalette &pal) const {
         Q_UNUSED(pal);
-#if defined(Q_OS_MACX)
+#if defined(Q_OS_MACX) && !defined(ENABLE_KDE)
         const QPalette *themePalette = QGuiApplicationPrivate::platformTheme()->palette();
         if (themePalette && themePalette->color(QPalette::Normal, QPalette::Highlight) ==
                 pal.color(QPalette::Normal, QPalette::Highlight) &&
