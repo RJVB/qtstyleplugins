@@ -37,9 +37,9 @@
 **
 ****************************************************************************/
 
-#include "qtcore-config.h"
 #include "qcommonstyle.h"
 #include "qcommonstyle_p.h"
+#include "qtcore-config.h"
 
 #include <qfile.h>
 #if QT_CONFIG(itemviews)
