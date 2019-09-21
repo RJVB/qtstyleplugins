@@ -453,7 +453,13 @@ int KStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidget 
     case SH_DialogButtonBox_ButtonsHaveIcons: {
         // was KGlobalSettings::showIconsOnPushButtons() :
         KConfigGroup g(KSharedConfig::openConfig(), "KDE");
-        return g.readEntry("ShowIconsOnPushButtons", true);
+        return g.readEntry("ShowIconsOnPushButtons",
+#ifdef Q_OS_MACOS
+                           false
+#else
+                           true
+#endif
+        );
     }
 
     case SH_ItemView_ArrowKeysNavigateIntoChildren:

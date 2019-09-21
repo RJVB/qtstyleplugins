@@ -1754,6 +1754,11 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
         if (const QStyleOptionButton *btn = qstyleoption_cast<const QStyleOptionButton *>(option)) {
             proxy()->drawControl(CE_PushButtonBevel, btn, painter, widget);
             QStyleOptionButton subopt = *btn;
+            if (!btn->icon.isNull()
+                && !(styleHint(SH_DialogButtonBox_ButtonsHaveIcons, btn, widget) || btn->text.isEmpty())) {
+                // remove the icon from our local QStyleOptionButton copy
+                subopt.icon = QIcon();
+            }
             subopt.rect = subElementRect(SE_PushButtonContents, btn, widget);
             proxy()->drawControl(CE_PushButtonLabel, &subopt, painter, widget);
         }
@@ -1767,7 +1772,9 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
             else
                 tf |= Qt::TextHideMnemonic;
 
-            if (!button->icon.isNull()) {
+            if (!button->icon.isNull() &&
+                (styleHint(SH_DialogButtonBox_ButtonsHaveIcons, button, widget) ||
+                 button->text.isEmpty())) {
                 //Center both icon and text
                 QPoint point;
 
@@ -3197,7 +3204,8 @@ QSize QFusionStyle::sizeFromContents(ContentsType type, const QStyleOption *opti
         if (const QStyleOptionButton *btn = qstyleoption_cast<const QStyleOptionButton *>(option)) {
             if (!btn->text.isEmpty() && newSize.width() < 80)
                 newSize.setWidth(80);
-            if (!btn->icon.isNull() && btn->iconSize.height() > 16)
+            if (!btn->icon.isNull() && (styleHint(SH_DialogButtonBox_ButtonsHaveIcons, btn, widget) ||
+                 btn->text.isEmpty()) && btn->iconSize.height() > 16)
                 newSize -= QSize(0, 2);
         }
         break;
