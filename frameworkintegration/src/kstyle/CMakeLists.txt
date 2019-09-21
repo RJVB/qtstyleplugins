@@ -7,12 +7,15 @@ set_package_properties(XCB PROPERTIES
     PURPOSE "Required to pass style properties to native Windows on X11 Platform"
 )
 
-if(NOT APPLE)
-  set(HAVE_X11 ${XCB_XCB_FOUND})
+# if(NOT APPLE)
   if (XCB_XCB_FOUND)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS X11Extras)
+    if (Qt5X11Extras_FOUND)
+        message(STATUS YAY)
+      set(HAVE_X11 ON)
+    endif()
   endif()
-endif()
+# endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Style")
@@ -27,7 +30,7 @@ add_library(KF5::Style ALIAS KF5Style)
 
 target_include_directories(KF5Style INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KStyle>")
 target_include_directories(KF5Style PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../private
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../style/private
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
 )
