@@ -37,6 +37,7 @@
 **
 ****************************************************************************/
 
+#include "qtcore-config.h"
 #include "qcommonstyle.h"
 #include "qcommonstyle_p.h"
 
@@ -5376,13 +5377,13 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
         ret = QAbstractItemView::ScrollPerItem;
         break;
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     case SH_TitleBar_ShowToolTipsOnButtons:
         ret = true;
         break;
     case SH_Widget_Animation_Duration:
         ret = styleHint(SH_Widget_Animate, opt, widget, hret) ? 200 : 0;
         break;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     case SH_ComboBox_AllowWheelScrolling:
         ret = true;
         break;

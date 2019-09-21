@@ -67,6 +67,14 @@
 #   define QT_FEATURE_effects 1
 #endif
 
+#ifndef QT_FEATURE_abstractbutton
+#   define QT_FEATURE_abstractbutton 1
+#endif
+
+#ifndef QT_FEATURE_abstractslider
+#   define QT_FEATURE_abstractslider 1
+#endif
+
 /*
  * These QT_[REQUIRE_]CONFIG features already exist as QT_NO_foo in 5.8 and earlier:
  */

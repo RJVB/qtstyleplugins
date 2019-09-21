@@ -2,12 +2,18 @@ cmake_minimum_required(VERSION 3.5)
 
 project(KFusion)
 
+include(FeatureSummary)
+
 option(ENABLE_KDE
         "Add KDE support (the KFusion style will inherit KStyle)?"
         OFF)
-option(USE_PRIVATE_KSTYLE
+add_feature_info("Add KDE support (the KFusion style will inherit KStyle)" ENABLE_KDE "")
+if(ENABLE_KDE)
+    option(USE_PRIVATE_KSTYLE
         "Use a private copy of the KStyle class"
         ON)
+    add_feature_info("Use a private copy of the KStyle class (required as long as KStyle isn't updated)" USE_PRIVATE_KSTYLE "")
+endif()
 
 find_package(ECM 5.60.0  NO_MODULE)
 
@@ -18,14 +24,12 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DI
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
-include(FeatureSummary)
 
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 
-add_feature_info("Add KDE support (the KFusion style will inherit KStyle)" ENABLE_KDE "")
-add_feature_info("Use a private copy of the KStyle class (required as long as KStyle isn't updated)" USE_PRIVATE_KSTYLE "")
-
-set(QT_MIN_VERSION 5.9.0)
+set(REQUIRED_QT_VERSION 5.8.0)
+# for the use of Q_FALLTHROUGH
+set(CMAKE_CXX_STANDARD 17)
 
 include(FindQt5Components)
 
