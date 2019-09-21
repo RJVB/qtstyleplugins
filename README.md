@@ -5,7 +5,7 @@ In addition it can (optionally) be built against an adapted version of the KStyl
 This improves integration with the KDE desktop.
 The private KStyle copy is adapted from FrameworkIntegration v5.62.0-2-gaa9e9a8 .
 
-It builds against Qt 5.9.8 and up (tested with 5.9.8 and 5.12.4).
+It builds against Qt 5.8 and up (tested with 5.8, 5.9.8 and 5.12.4).
 
 It will register as KFusion but also as Fusion, so that it replaces the built-in Fusion style in Qt builds where this style was disabled.
 
