@@ -2017,7 +2017,19 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
                 p->drawPixmap(iconRect.x(), iconRect.y(), tabIcon);
             }
 
+#if defined(Q_OS_MACOS) && QT_VERSION == QT_VERSION_CHECK(5, 8, 0)
+            // work around unreadable tab label text colour set for the current tab in
+            // QTabBarPrivate::initBasicStyleOption().
+            QPalette palette = tab->palette;
+            if ( (tab->state & QStyle::State_Selected) && !tab->documentMode
+                && (QSysInfo::MacintoshVersion < QSysInfo::MV_10_10 || widget->isActiveWindow())
+                && palette.color(QPalette::WindowText) == Qt::white) {
+                palette.setColor(QPalette::WindowText, widget->palette().color(QPalette::WindowText));
+            }
+            proxy()->drawItemText(p, tr, alignment, palette, tab->state & State_Enabled, tab->text, QPalette::WindowText);
+#else
             proxy()->drawItemText(p, tr, alignment, tab->palette, tab->state & State_Enabled, tab->text, QPalette::WindowText);
+#endif
             if (verticalTabs)
                 p->restore();
 

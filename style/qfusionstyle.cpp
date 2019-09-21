@@ -1949,11 +1949,6 @@ void QFusionStyle::drawControl(ControlElement element, const QStyleOption *optio
         }
         painter->restore();
         break;
-#if defined(Q_OS_MACOS) && QT_VERSION == QT_VERSION_CHECK(5, 8, 0)
-    // TODO: work around unreadable tab label text colour
-//     case CE_TabBarTabLabel:
-//         break;
-#endif
 #endif //QT_CONFIG(tabbar)
     default:
         FusionParentStyle::drawControl(element,option,painter,widget);
