@@ -87,7 +87,7 @@
 #endif
 #include <qdrawutil.h>
 #include <private/qstylehelper_p.h>
-#include <private/qdrawhelper_p.h>
+#include "private/qdrawhelper_p.h"
 #include <private/qapplication_p.h>
 
 QT_BEGIN_NAMESPACE

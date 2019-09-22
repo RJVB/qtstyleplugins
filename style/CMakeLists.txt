@@ -4,6 +4,8 @@ set(kfusionstyle_SRCS
     private/qstyleanimation.cpp
     private/qstylehelper.cpp
     private/qcommonstyle.cpp
+    private/qdrawhelper_ssse3.cpp
+    private/qdrawhelper_sse4.cpp
     qfusionstyle.cpp
     main.cpp)
 
