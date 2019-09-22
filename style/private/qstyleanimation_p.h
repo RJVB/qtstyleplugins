@@ -40,6 +40,10 @@
 #ifndef QSTYLEANIMATION_P_H
 #define QSTYLEANIMATION_P_H
 
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qsa_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
 #include "qabstractanimation.h"
 #include "qdatetime.h"

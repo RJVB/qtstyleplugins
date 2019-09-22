@@ -40,6 +40,10 @@
 #ifndef QDRAWHELPER_P_H
 #define QDRAWHELPER_P_H
 
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qdh_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 //
 //  W A R N I N G
 //  -------------

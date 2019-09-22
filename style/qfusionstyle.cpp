@@ -1,3 +1,7 @@
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.

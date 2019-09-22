@@ -40,6 +40,10 @@
 #ifndef QRGBA64_H
 #define QRGBA64_H
 
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qrgb = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 #include <QtGui/qtguiglobal.h>
 #include <QtCore/qprocessordetection.h>
 

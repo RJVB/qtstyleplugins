@@ -37,6 +37,12 @@
 **
 ****************************************************************************/
 
+#ifndef QTCORE_CONFIG_H
+
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qc = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 #include <QtCore/qtcore-config.h>
 
 /*
@@ -338,4 +344,7 @@
 #   else
 #       define QT_FEATURE_menubar 1
 #   endif
+#endif
+
+#define QTCORE_CONFIG_H
 #endif

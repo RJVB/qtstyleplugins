@@ -40,6 +40,10 @@
 #ifndef QCOMMONSTYLE_H
 #define QCOMMONSTYLE_H
 
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qcs= "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 #include <QtWidgets/qtwidgetsglobal.h>
 #include <QtWidgets/qstyle.h>
 

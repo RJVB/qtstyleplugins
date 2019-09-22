@@ -1,3 +1,7 @@
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string= "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 /**
  * KStyle for KDE4
  * Copyright (C) 2004-2005 Maksim Orlovich <maksim@kde.org>

@@ -40,6 +40,10 @@
 #ifndef QDRAWINGPRIMITIVE_SSE2_P_H
 #define QDRAWINGPRIMITIVE_SSE2_P_H
 
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_qdp_s2_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
+
 #include <QtGui/private/qtguiglobal_p.h>
 #include <private/qsimd_p.h>
 #include "qdrawhelper_p.h"
