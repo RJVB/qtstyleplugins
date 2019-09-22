@@ -11,7 +11,6 @@ set_package_properties(XCB PROPERTIES
   if (XCB_XCB_FOUND)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS X11Extras)
     if (Qt5X11Extras_FOUND)
-        message(STATUS YAY)
       set(HAVE_X11 ON)
     endif()
   endif()
