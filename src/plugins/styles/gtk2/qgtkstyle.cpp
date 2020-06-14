@@ -471,6 +471,10 @@ void QGtkStyle::polish(QWidget *widget)
     Q_D(QGtkStyle);
 
     QCommonStyle::polish(widget);
+    if( widget->parent() && qobject_cast<QFrame*>(widget) && widget->parent()->inherits( "KTitleWidget" ) ) {
+        widget->setAutoFillBackground( false );
+        widget->setBackgroundRole( QPalette::Window );
+    }
     if (!d->isThemeAvailable())
         return;
     if (qobject_cast<QAbstractButton*>(widget)
@@ -828,7 +832,11 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
     }
 
     case SH_DialogButtonBox_ButtonsHaveIcons: {
+#ifdef Q_OS_MACOS
+        gboolean buttonsHaveIcons = false;
+#else
         gboolean buttonsHaveIcons = true;
+#endif
         GtkSettings *settings = gtk_settings_get_default();
         g_object_get(settings, "gtk-button-images", &buttonsHaveIcons, NULL);
         return buttonsHaveIcons;
@@ -842,6 +850,19 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
         }
         return underlineShortcut;
     }
+
+// #ifdef Q_OS_MACOS
+    case SH_TitleBar_ModifyNotification: {
+        // when on Mac and using the Cocoa QPA, SH_TitleBar_ModifyNotification should return false so
+        // windowModified notification is done only via the native mechanism (in the window close button).
+        const auto ret = d->isCocoa ? false : true;
+        return ret;
+    }
+// #endif
+
+    case SH_Menu_SupportsSections:
+        // TODO: implement actual section support (texted separators)
+        return true;
 
     default:
         break;
@@ -3326,6 +3347,11 @@ void QGtkStyle::drawControl(ControlElement element,
             GtkWidget *gtkButton = d->gtkWidget("GtkButton");
             proxy()->drawControl(CE_PushButtonBevel, btn, painter, widget);
             QStyleOptionButton subopt = *btn;
+            if (!btn->icon.isNull()
+                && !(styleHint(SH_DialogButtonBox_ButtonsHaveIcons, btn, widget) || btn->text.isEmpty())) {
+                // remove the icon from our local QStyleOptionButton copy
+                subopt.icon = QIcon();
+            }
             subopt.rect = subElementRect(SE_PushButtonContents, btn, widget);
             gint interiorFocus = true;
             gtk_widget_style_get(gtkButton, "interior-focus", &interiorFocus, NULL);
@@ -3876,7 +3902,8 @@ QSize QGtkStyle::sizeFromContents(ContentsType type, const QStyleOption *option,
         break;
     case CT_PushButton:
         if (const QStyleOptionButton *btn = qstyleoption_cast<const QStyleOptionButton *>(option)) {
-            if (!btn->icon.isNull() && btn->iconSize.height() > 16)
+            if (!btn->icon.isNull() && (styleHint(SH_DialogButtonBox_ButtonsHaveIcons, btn, widget) ||
+                 btn->text.isEmpty()) && btn->iconSize.height() > 16)
                 newSize -= QSize(0, 2); // From cleanlooksstyle
             newSize += QSize(0, 1);
             GtkWidget *gtkButton = d->gtkWidget("GtkButton");

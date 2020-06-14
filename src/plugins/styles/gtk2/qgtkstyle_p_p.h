@@ -211,6 +211,7 @@ protected:
 private:
     static QList<QGtkStylePrivate *> instances;
     static WidgetMap *widgetMap;
+    bool isCocoa;
     friend class QGtkStyleUpdateScheduler;
 };
 
