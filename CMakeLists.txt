@@ -57,8 +57,6 @@ if(ENABLE_KDE)
 
     if (NOT USE_PRIVATE_KSTYLE)
         find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS FrameworkIntegration)
-    else()
-        add_subdirectory(frameworkintegration)
     endif()
     add_definitions(-DTRANSLATION_DOMAIN=\"kfusion\"
                     -DENABLE_KDE)
@@ -67,6 +65,6 @@ if(ENABLE_KDE)
     endif()
 endif()
 
-add_subdirectory(style)
+add_subdirectory(src)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)

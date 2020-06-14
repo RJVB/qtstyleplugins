@@ -90,8 +90,8 @@
 #include <qwizard.h>
 #endif
 #include <qdrawutil.h>
-#include <private/qstylehelper_p.h>
-#include "private/qdrawhelper_p.h"
+#include "qtprivate/qstylehelper_p.h"
+#include "qtprivate/qdrawhelper_p.h"
 #include <private/qapplication_p.h>
 
 QT_BEGIN_NAMESPACE

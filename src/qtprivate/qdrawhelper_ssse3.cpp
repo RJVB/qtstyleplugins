@@ -45,7 +45,7 @@
 
 #if defined(QT_COMPILER_SUPPORTS_SSSE3) && defined(__SSSE3__)
 
-#include <private/qdrawingprimitive_sse2_p.h>
+#include "qdrawingprimitive_sse2_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -1,21 +1,5 @@
 add_definitions(-DQT_PLUGIN)
 
-set(private_SRCS
-    private/qstyleanimation.cpp
-    private/qstylehelper.cpp
-    private/qcommonstyle.cpp
-    private/qdrawhelper_ssse3.cpp
-    private/qdrawhelper_sse4.cpp)
-
-add_library(private STATIC ${private_SRCS})
-target_include_directories(private PRIVATE
-    ${Qt5Core_PRIVATE_INCLUDE_DIRS}
-    ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
-)
-target_link_libraries(private PRIVATE
-    Qt5::Core
-    Qt5::Widgets)
-
 set(kfusionstyle_SRCS
     qfusionstyle.cpp
     main.cpp)
@@ -25,13 +9,13 @@ set_source_files_properties(main.cpp OBJECT_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/
 add_library(kfusionstyle SHARED ${kfusionstyle_SRCS})
 
 target_include_directories(kfusionstyle PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/private
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../..
     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
     ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
 )
 
 target_link_libraries(kfusionstyle PRIVATE
-    private
+    Styles::Private
     Qt5::Core
     Qt5::Widgets)
 if(ENABLE_KDE)

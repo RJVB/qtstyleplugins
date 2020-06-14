@@ -98,7 +98,7 @@
 #if QT_CONFIG(treeview)
 #include "qtreeview.h"
 #endif
-#include <private/qcommonstylepixmaps_p.h>
+#include "qcommonstylepixmaps_p.h"
 #include <private/qmath_p.h>
 #include <qdebug.h>
 #include <qtextformat.h>
@@ -113,7 +113,7 @@
 #include <qvariant.h>
 #include <qpixmapcache.h>
 #if QT_CONFIG(animation)
-#include <private/qstyleanimation_p.h>
+#include "qstyleanimation_p.h"
 #endif
 
 #include <limits.h>
@@ -122,7 +122,7 @@
 #   include "private/qtextengine_p.h"
 #endif
 
-#include <private/qstylehelper_p.h>
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

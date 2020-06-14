@@ -52,9 +52,9 @@
 //
 
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
-#include "private/qcommonstyle.h"
+#include "qtprivate/qcommonstyle.h"
 
-#include "private/qtcore-config.h"
+#include "qtprivate/qtcore-config.h"
 
 QT_BEGIN_NAMESPACE
 
