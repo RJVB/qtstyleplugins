@@ -1,14 +1,19 @@
+CONFIG += options
 TEMPLATE = subdirs
-SUBDIRS = \
-    cleanlooks \
-    motif \
-    plastique
 
-greaterThan(QT_MAJOR_VERSION, 5) | greaterThan(QT_MINOR_VERSION, 6) {
-    # only 5.7 or later
-    SUBDIRS += bb10style
+CONFIG(cleanlooks) {
+    message("Building the cleanlooks style plugin")
+    SUBDIRS += cleanlooks
 }
 
-packagesExist(gtk+-2.0 x11) {
-    SUBDIRS += gtk2
+CONFIG(plastique) {
+    message("Building the plastique style plugin")
+    SUBDIRS += plastique
+}
+
+CONFIG(gtk2) {
+    packagesExist(gtk+-2.0 x11) {
+        message("Building the GTk2 style plugin")
+        SUBDIRS += gtk2
+    }
 }
