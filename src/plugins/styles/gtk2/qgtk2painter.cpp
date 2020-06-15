@@ -39,7 +39,7 @@
 // and takes care of converting all such calls into cached Qt pixmaps.
 
 #include "qgtkstyle_p_p.h"
-#include <private/qhexstring_p.h>
+#include "qtprivate/qhexstring_p.h"
 #include <QtWidgets/QWidget>
 #include <QtGui/QPixmapCache>
 

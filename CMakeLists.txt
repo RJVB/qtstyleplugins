@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(KFusion)
+project(QtStylePlugins)
 
 include(FeatureSummary)
+
+option(ENABLE_CLEANLOOKS "Build the cleanlooks style" ON)
+option(ENABLE_GTK2 "Build the GTk2 style that uses GTk2 and your GTk2 theme to render Qt widgets" ON)
+option(ENABLE_KFUSION "Build the KFusion style (a tweaked version of Qt's built-in Fusion style)" ON)
+option(ENABLE_PLASTIQUE "Build the plastique style" ON)
 
 option(ENABLE_KDE
         "Add KDE support (the KFusion style will inherit KStyle)?"

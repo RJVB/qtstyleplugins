@@ -33,7 +33,7 @@
 
 #include "qgtkpainter_p.h"
 
-#include <private/qhexstring_p.h>
+#include "qtprivate/qhexstring_p.h"
 
 QT_BEGIN_NAMESPACE
 

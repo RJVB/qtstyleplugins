@@ -88,7 +88,7 @@ static const int blueFrameWidth =  2;  // with of line edit focus frame
 #include <qstylefactory.h>
 
 #include "qstylehelper_p.h"
-#include "qstylecache_p.h"
+#include "qtprivate/qstyle_p.h"
 
 QT_BEGIN_NAMESPACE
 

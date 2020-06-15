@@ -39,7 +39,7 @@
 #include <qabstractscrollarea.h>
 #include <qwindow.h>
 
-#include "qstylecache_p.h"
+#include "qtprivate/qstyle_p.h"
 #include "qstylehelper_p.h"
 #include <qstringbuilder.h>
 
