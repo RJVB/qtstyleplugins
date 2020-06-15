@@ -13,4 +13,7 @@ moc_*.cpp
 *.moc
 .qmake.cache
 config.log
-tmp
+=======
+.kdev4
+*.kdev4
+build*
