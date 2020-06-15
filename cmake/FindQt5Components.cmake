@@ -1,1 +1,6 @@
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets)
+if(ENABLE_GTK2)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets DBus)
+    find_package(Qt5ThemeSupport REQUIRED)
+else()
+    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets)
+endif()

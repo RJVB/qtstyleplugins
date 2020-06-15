@@ -34,7 +34,7 @@
 #ifndef QGTK2THEME_H
 #define QGTK2THEME_H
 
-#include <private/qgenericunixthemes_p.h>
+#include <QtThemeSupport/private/qgenericunixthemes_p.h>
 
 QT_BEGIN_NAMESPACE
 

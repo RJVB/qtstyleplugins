@@ -31,6 +31,8 @@
 **
 ****************************************************************************/
 
+#undef QT_NO_CAST_FROM_BYTEARRAY
+
 #include "qgtk2dialoghelpers.h"
 
 #include <qeventloop.h>
