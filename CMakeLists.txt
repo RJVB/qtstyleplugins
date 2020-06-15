@@ -38,6 +38,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 include(FindQt5Components)
 
+if(ENABLE_GTK2)
+    if ((NOT APPLE OR APPLE_FORCE_X11))
+        find_package(X11)
+    endif()
+    find_package(GTK2 COMPONENTS gtk)
+endif()
+
 execute_process(COMMAND cmake/git_version.sh
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   OUTPUT_VARIABLE KF5_VERSION
