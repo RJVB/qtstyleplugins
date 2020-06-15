@@ -45,7 +45,7 @@
 #include <qpainter.h>
 #include <qpixmapcache.h>
 #include <private/qmath_p.h>
-#include <private/qstyle_p.h>
+#include "qstyle_p.h"
 #include <qmath.h>
 #if QT_CONFIG(scrollbar)
 #include <qscrollbar.h>

@@ -38,6 +38,13 @@
 ****************************************************************************/
 
 #ifndef QCOMMONSTYLE_P_H
+
+// #include <qglobal.h>
+#if 0 //QT_VERSION >= QT_VERSION_CHECK(5,12,6)
+#warning "including installed qcommonstyle_p.h"
+#include <QtWidgets/private/qcommonstyle_p.h>
+#else
+
 #define QCOMMONSTYLE_P_H
 
 #ifdef __GNUC__
@@ -46,7 +53,7 @@
 
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
 #include "qcommonstyle.h"
-#include <QtWidgets/private/qstyle_p.h>
+#include "qstyle_p.h"
 #if QT_CONFIG(animation)
 #include "qstyleanimation_p.h"
 #endif
@@ -144,5 +151,7 @@ private:
 };
 
 QT_END_NAMESPACE
+
+#endif // Qt 5.12
 
 #endif //QCOMMONSTYLE_P_H

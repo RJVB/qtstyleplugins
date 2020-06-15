@@ -1,3 +1,10 @@
+
+// #include <qglobal.h>
+#if 0 //QT_VERSION >= QT_VERSION_CHECK(5,12,6)
+#warning "including installed qcommonstylepixmaps_p.h"
+#include <QtWidgets/private/qcommonstylepixmaps_p.h>
+#else
+
 #ifdef __GNUC__
     __attribute__((used)) static const char *id_string_qcsp_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
 #endif
@@ -531,3 +538,5 @@ static const char *const question_xpm[] = {
 "...................**..........."};
 
 #endif //QT_NO_IMAGEFORMAT_XPM
+
+#endif // 5.12

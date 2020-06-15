@@ -3,7 +3,7 @@
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** This file is part of the QtWidgets module of the Qt Toolkit.
+** This file is part of the QtGui module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -37,19 +37,21 @@
 **
 ****************************************************************************/
 
-#include <QtWidgets/private/qtwidgetsglobal_p.h>
+#include <QtGui/private/qtguiglobal_p.h>
 #include <QtCore/qpoint.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qpolygon.h>
 #include <QtCore/qstringbuilder.h>
-#include <QtGui/qaccessible.h>
 
-#ifndef QSTYLEHELPER_P_H
-#define QSTYLEHELPER_P_H
+#ifndef QHEXSTRING_P_H
 
-#ifdef __GNUC__
-    __attribute__((used)) static const char *id_string_qsh_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
-#endif
+// #include <qglobal.h>
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,6)
+#warning "including installed qhexstring_p.h"
+#include <QtGui/private/qhexstring_p.h>
+#else
+
+#define QHEXSTRING_P_H
 
 //
 //  W A R N I N G
@@ -62,45 +64,42 @@
 // We mean it.
 //
 
-#include "qhexstring_p.h"
-
 QT_BEGIN_NAMESPACE
 
-class QColor;
-class QObject;
-class QPainter;
-class QPalette;
-class QPixmap;
-class QStyleOptionSlider;
-class QStyleOption;
-class QWidget;
-class QWindow;
-
-namespace QStyleHelper
+// internal helper. Converts an integer value to a unique string token
+template <typename T>
+        struct HexString
 {
-    QString uniqueName(const QString &key, const QStyleOption *option, const QSize &size);
-    Q_WIDGETS_EXPORT qreal dpiScaled(qreal value);
-#if QT_CONFIG(dial)
-    qreal angle(const QPointF &p1, const QPointF &p2);
-    QPolygonF calcLines(const QStyleOptionSlider *dial);
-    int calcBigLineSize(int radius);
-    Q_WIDGETS_EXPORT void drawDial(const QStyleOptionSlider *dial, QPainter *painter);
-#endif //QT_CONFIG(dial)
-    Q_WIDGETS_EXPORT void drawBorderPixmap(const QPixmap &pixmap, QPainter *painter, const QRect &rect,
-                     int left = 0, int top = 0, int right = 0,
-                     int bottom = 0);
-#ifndef QT_NO_ACCESSIBILITY
-    Q_WIDGETS_EXPORT bool isInstanceOf(QObject *obj, QAccessible::Role role);
-    Q_WIDGETS_EXPORT bool hasAncestor(QObject *obj, QAccessible::Role role);
-#endif
-    Q_WIDGETS_EXPORT QColor backgroundColor(const QPalette &pal, const QWidget* widget = 0);
+    inline HexString(const T t)
+        : val(t)
+    {}
 
-    enum WidgetSizePolicy { SizeLarge = 0, SizeSmall = 1, SizeMini = 2, SizeDefault = -1 };
+    inline void write(QChar *&dest) const
+    {
+        const ushort hexChars[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        const char *c = reinterpret_cast<const char *>(&val);
+        for (uint i = 0; i < sizeof(T); ++i) {
+            *dest++ = hexChars[*c & 0xf];
+            *dest++ = hexChars[(*c & 0xf0) >> 4];
+            ++c;
+        }
+    }
+    const T val;
+};
 
-    Q_WIDGETS_EXPORT WidgetSizePolicy widgetSizePolicy(const QWidget *w, const QStyleOption *opt = 0);
-}
-
+// specialization to enable fast concatenating of our string tokens to a string
+template <typename T>
+        struct QConcatenable<HexString<T> >
+{
+    typedef HexString<T> type;
+    enum { ExactSize = true };
+    static int size(const HexString<T> &) { return sizeof(T) * 2; }
+    static inline void appendTo(const HexString<T> &str, QChar *&out) { str.write(out); }
+    typedef QString ConvertTo;
+};
 
 QT_END_NAMESPACE
 
-#endif // QSTYLEHELPER_P_H
+#endif // Qt 5.12
+
+#endif // QHEXSTRING_P_H

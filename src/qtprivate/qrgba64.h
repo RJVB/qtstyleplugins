@@ -38,6 +38,13 @@
 ****************************************************************************/
 
 #ifndef QRGBA64_H
+
+#include <qglobal.h>
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,6)
+#warning "including installed qrgba64.h"
+#include <QtGui/qrgba64.h>
+#else
+
 #define QRGBA64_H
 
 #ifdef __GNUC__
@@ -226,5 +233,7 @@ inline Q_DECL_CONSTEXPR uint qAlpha(QRgba64 rgb)
 { return rgb.alpha8(); }
 
 QT_END_NAMESPACE
+
+#endif // Qt 5.12
 
 #endif // QRGBA64_H

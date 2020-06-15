@@ -38,6 +38,13 @@
 ****************************************************************************/
 
 #ifndef QRGBA64_P_H
+
+#include <qglobal.h>
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,6)
+#warning "including installed qrgba64_p.h"
+#include <QtGui/private/qrgba64_p.h>
+#else
+
 #define QRGBA64_P_H
 
 #ifdef __GNUC__
@@ -295,5 +302,7 @@ static Q_ALWAYS_INLINE void blend_pixel(QRgba64 &dst, QRgba64 src, const int con
 }
 
 QT_END_NAMESPACE
+
+#endif // Qt 5.12
 
 #endif // QRGBA64_P_H
