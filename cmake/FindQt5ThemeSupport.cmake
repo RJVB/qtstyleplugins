@@ -70,6 +70,10 @@ endif()
 find_package(PkgConfig)
 pkg_check_modules(PKG_Qt5ThemeSupport Qt5Gui)
 message(STATUS ${PKG_Qt5ThemeSupport_INCLUDEDIR})
+if(APPLE)
+    execute_process(COMMAND ${QMAKE_EXECUTABLE} -query QT_INSTALL_HEADERS OUTPUT_VARIABLE QT_INCLUDES_DIR ERROR_VARIABLE QMAKE_ERRORS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${QMAKE_EXECUTABLE} -query QT_INSTALL_LIBS OUTPUT_VARIABLE QT_FRAMEWORKS_DIR ERROR_VARIABLE QMAKE_ERRORS OUTPUT_STRIP_TRAILING_WHITESPACE)
+endif()
 
 set(Qt5ThemeSupport_DEFINITIONS ${PKG_Qt5ThemeSupport_CFLAGS_OTHER})
 set(Qt5ThemeSupport_VERSION ${PKG_Qt5ThemeSupport_VERSION})
@@ -79,12 +83,15 @@ find_path(Qt5ThemeSupport_INCLUDE_DIR
         QtThemeSupport/private/qgenericunixthemes_p.h
     HINTS
         ${PKG_Qt5ThemeSupport_INCLUDEDIR}/QtThemeSupport/${PKG_Qt5ThemeSupport_VERSION}/
+	   ${QT_INCLUDES_DIR}/QtThemeSupport/${PKG_Qt5ThemeSupport_VERSION}
 )
 find_library(Qt5ThemeSupport_LIBRARY
     NAMES
         Qt5ThemeSupport
+        libQt5ThemeSupport.a
     HINTS
         ${PKG_Qt5ThemeSupport_LIBRARY_DIRS}
+	   ${QT_FRAMEWORKS_DIR}
 )
 
 include(FindPackageHandleStandardArgs)
