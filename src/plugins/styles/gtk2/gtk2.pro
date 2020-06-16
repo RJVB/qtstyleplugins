@@ -12,6 +12,6 @@ HEADERS += qgtk2painter_p.h qgtkglobal_p.h qgtkpainter_p.h qgtkstyle_p.h qgtksty
 SOURCES += qgtk2painter.cpp qgtkpainter.cpp qgtkstyle.cpp qgtkstyle_p.cpp plugin.cpp
 DEFINES += QT_NO_ANIMATION
 
-include(../shared/shared.pri)
+include(../../../qtprivate/qtprivate.pri)
 
 OTHER_FILES += gtk2.json

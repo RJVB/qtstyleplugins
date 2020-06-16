@@ -9,6 +9,6 @@ HEADERS += qplastiquestyle.h
 SOURCES += qplastiquestyle.cpp
 SOURCES += plugin.cpp
 
-include(../shared/shared.pri)
+include(../../../qtprivate/qtprivate.pri)
 
 OTHER_FILES += plastique.json
