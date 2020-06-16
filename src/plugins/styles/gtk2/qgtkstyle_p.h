@@ -48,7 +48,7 @@
 #include <QtGui/QPalette>
 #include <QtGui/QFont>
 #include <QtWidgets/QFileDialog>
-#include <QtWidgets/qcommonstyle.h>
+#include "qtprivate/qcommonstyle.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -18,11 +18,6 @@ target_link_libraries(qcleanlooksstyle PRIVATE
     Styles::Private
     Qt5::Core
     Qt5::Gui
-    Qt5::Widgets)
-# if(ENABLE_KDE)
-#     target_link_libraries(qcleanlooksstyle PRIVATE
-#         KF5::Style)
-# endif()
-    
+    Qt5::Widgets)    
 
 install(TARGETS qcleanlooksstyle DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/styles)

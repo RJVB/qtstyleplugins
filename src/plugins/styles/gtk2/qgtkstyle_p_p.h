@@ -53,8 +53,17 @@
 
 #include <QtWidgets/QFileDialog>
 
+#ifdef QT_NO_ANIMATION
+    // make sure animation support if turned off
+#   ifdef QT_FEATURE_animation
+#       undef QT_FEATURE_animation
+#   endif
+#   define QT_FEATURE_animation -1
+#endif
+
 #include "qgtkstyle_p.h"
-#include <private/qcommonstyle_p.h>
+#include "qtprivate/qcommonstyle.h"
+#include "qtprivate/qcommonstyle_p.h"
 #include "qgtkglobal_p.h"
 
 QT_BEGIN_NAMESPACE
