@@ -6,6 +6,7 @@ include(FeatureSummary)
 
 option(ENABLE_CLEANLOOKS "Build the cleanlooks style" ON)
 option(ENABLE_GTK2 "Build the GTk2 style that uses GTk2 and your GTk2 theme to render Qt widgets" ON)
+option(ENABLE_GTK3 "Build the GTk3 style that uses GTk3 and your GTk3 theme to render Qt widgets" OFF)
 option(ENABLE_KFUSION "Build the KFusion style (a tweaked version of Qt's built-in Fusion style)" ON)
 option(ENABLE_PLASTIQUE "Build the plastique style" ON)
 
@@ -38,11 +39,12 @@ set(CMAKE_CXX_STANDARD 17)
 
 include(FindQt5Components)
 
-if(ENABLE_GTK2)
+if(ENABLE_GTK2 OR ENABLE_GTK3)
     if ((NOT APPLE OR APPLE_FORCE_X11))
         find_package(X11)
     endif()
     find_package(GTK2 COMPONENTS gtk)
+    find_package(GTK3 COMPONENTS gtk)
 endif()
 
 execute_process(COMMAND cmake/git_version.sh
