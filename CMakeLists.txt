@@ -12,7 +12,7 @@ option(ENABLE_PLASTIQUE "Build the plastique style" ON)
 option(ENABLE_KDE
         "Add KDE support (the KFusion style will inherit KStyle)?"
         OFF)
-add_feature_info("Add KDE support (the KFusion style will inherit KStyle)" ENABLE_KDE "")
+add_feature_info("Add KDE support (the GTk2 and KFusion styles will inherit KStyle)" ENABLE_KDE "")
 if(ENABLE_KDE)
     option(USE_PRIVATE_KSTYLE
         "Use a private copy of the KStyle class"

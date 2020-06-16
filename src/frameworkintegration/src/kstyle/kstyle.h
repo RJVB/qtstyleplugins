@@ -37,6 +37,10 @@
 
 #ifndef KDE_KSTYLE_H
 #define KDE_KSTYLE_H
+#warning "Using private kstyle.h copy"
+#ifdef __GNUC__
+    __attribute__((used)) static const char *id_string_ksh_p = "$Id: @(#) " __FILE__ "@" __DATE__ " $";
+#endif
 
 #include <kstyle_export.h>
 #include <qcommonstyle.h>

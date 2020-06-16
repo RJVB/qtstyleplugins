@@ -48,15 +48,30 @@
 #include <QtGui/QPalette>
 #include <QtGui/QFont>
 #include <QtWidgets/QFileDialog>
+
+#ifdef QT_NO_ANIMATION
+    // make sure animation support if turned off
+#   ifdef QT_FEATURE_animation
+#       undef QT_FEATURE_animation
+#   endif
+#   define QT_FEATURE_animation -1
+#endif
+
 #include "qtprivate/qcommonstyle.h"
 
 QT_BEGIN_NAMESPACE
 
+#ifdef ENABLE_KDE
+#include "kstyle.h"
+using ParentStyle = KStyle;
+#else
+using ParentStyle = QCommonStyle;
+#endif
 
 class QPainterPath;
 class QGtkStylePrivate;
 
-class QGtkStyle : public QCommonStyle
+class QGtkStyle : public ParentStyle
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QGtkStyle)

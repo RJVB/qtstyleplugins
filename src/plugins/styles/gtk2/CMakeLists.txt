@@ -27,10 +27,10 @@ target_link_libraries(qgtk2style PRIVATE
     Qt5::Widgets
     ${GTK2_LIBRARIES}
     ${X11_LIBRARIES})
-# if(ENABLE_KDE)
-#     target_link_libraries(qgtk2style PRIVATE
-#         KF5::Style)
-# endif()
+if(ENABLE_KDE)
+    target_link_libraries(qgtk2style PRIVATE
+        KF5::Style)
+endif()
     
 
 install(TARGETS qgtk2style DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/styles)

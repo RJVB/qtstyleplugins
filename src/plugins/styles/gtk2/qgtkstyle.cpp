@@ -299,7 +299,7 @@ static GdkColor fromQColor(const QColor &color)
     Constructs a QGtkStyle object.
 */
 QGtkStyle::QGtkStyle()
-    : QCommonStyle(*new QGtkStylePrivate)
+    : ParentStyle(*new QGtkStylePrivate)
 {
     Q_D(QGtkStyle);
     d->init();
@@ -311,7 +311,7 @@ QGtkStyle::QGtkStyle()
     Constructs a QGtkStyle object.
 */
 QGtkStyle::QGtkStyle(QGtkStylePrivate &dd)
-     : QCommonStyle(dd)
+     : ParentStyle(dd)
 {
     Q_D(QGtkStyle);
     d->init();
@@ -332,7 +332,7 @@ QPalette QGtkStyle::standardPalette() const
 {
     Q_D(const QGtkStyle);
 
-    QPalette palette = QCommonStyle::standardPalette();
+    QPalette palette = ParentStyle::standardPalette();
     if (d->isThemeAvailable()) {
         GtkStyle *style = d->gtkStyle();
         GtkWidget *gtkButton = d->gtkWidget("GtkButton");
@@ -423,7 +423,7 @@ void QGtkStyle::polish(QPalette &palette)
     Q_D(QGtkStyle);
 
     if (!d->isThemeAvailable())
-        QCommonStyle::polish(palette);
+        ParentStyle::polish(palette);
     else
         palette = palette.resolve(standardPalette());
 }
@@ -435,7 +435,7 @@ void QGtkStyle::polish(QApplication *app)
 {
     Q_D(QGtkStyle);
 
-    QCommonStyle::polish(app);
+    ParentStyle::polish(app);
     // Custom fonts and palettes with QtConfig are intentionally
     // not supported as these should be entirely determined by
     // current Gtk settings
@@ -455,7 +455,7 @@ void QGtkStyle::unpolish(QApplication *app)
 {
     Q_D(QGtkStyle);
 
-    QCommonStyle::unpolish(app);
+    ParentStyle::unpolish(app);
     QPixmapCache::clear();
 
     if (app->desktopSettingsAware() && d->isThemeAvailable() && !d->isKDE4Session())
@@ -470,7 +470,7 @@ void QGtkStyle::polish(QWidget *widget)
 {
     Q_D(QGtkStyle);
 
-    QCommonStyle::polish(widget);
+    ParentStyle::polish(widget);
     if( widget->parent() && qobject_cast<QFrame*>(widget) && widget->parent()->inherits( "KTitleWidget" ) ) {
         widget->setAutoFillBackground( false );
         widget->setBackgroundRole( QPalette::Window );
@@ -498,7 +498,7 @@ void QGtkStyle::polish(QWidget *widget)
 */
 void QGtkStyle::unpolish(QWidget *widget)
 {
-    QCommonStyle::unpolish(widget);
+    ParentStyle::unpolish(widget);
 }
 
 /*!
@@ -511,7 +511,7 @@ int QGtkStyle::pixelMetric(PixelMetric metric,
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable())
-        return QCommonStyle::pixelMetric(metric, option, widget);
+        return ParentStyle::pixelMetric(metric, option, widget);
 
     switch (metric) {
     case PM_DefaultFrameWidth:
@@ -696,7 +696,7 @@ int QGtkStyle::pixelMetric(PixelMetric metric,
     case PM_TabCloseIndicatorHeight:
         return 20;
     default:
-        return QCommonStyle::pixelMetric(metric, option, widget);
+        return ParentStyle::pixelMetric(metric, option, widget);
     }
 }
 
@@ -710,7 +710,7 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable())
-        return QCommonStyle::styleHint(hint, option, widget, returnData);
+        return ParentStyle::styleHint(hint, option, widget, returnData);
 
     switch (hint) {
     case SH_ItemView_ChangeHighlightOnFocus:
@@ -750,7 +750,7 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
             mask->region -= QRect(option->rect.right() - 1, option->rect.top() + 2, 2, 1);
             mask->region -= QRect(option->rect.right() , option->rect.top() + 3, 1, 2);
         }
-        return QCommonStyle::styleHint(hint, option, widget, returnData);
+        return ParentStyle::styleHint(hint, option, widget, returnData);
     case SH_MessageBox_TextInteractionFlags:
         return Qt::TextSelectableByMouse | Qt::LinksAccessibleByMouse;
     case SH_MessageBox_CenterButtons:
@@ -777,7 +777,7 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
     case SH_ToolButtonStyle:
     {
         if (d->isKDE4Session())
-            return QCommonStyle::styleHint(hint, option, widget, returnData);
+            return ParentStyle::styleHint(hint, option, widget, returnData);
         GtkWidget *gtkToolbar = d->gtkWidget("GtkToolbar");
         GtkToolbarStyle toolbar_style = GTK_TOOLBAR_ICONS;
         g_object_get(gtkToolbar, "toolbar-style", &toolbar_style, NULL);
@@ -867,7 +867,7 @@ int QGtkStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidg
     default:
         break;
     }
-    return QCommonStyle::styleHint(hint, option, widget, returnData);
+    return ParentStyle::styleHint(hint, option, widget, returnData);
 }
 
 /*!
@@ -881,7 +881,7 @@ void QGtkStyle::drawPrimitive(PrimitiveElement element,
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable()) {
-        QCommonStyle::drawPrimitive(element, option, painter, widget);
+        ParentStyle::drawPrimitive(element, option, painter, widget);
         return;
     }
 
@@ -1050,7 +1050,7 @@ void QGtkStyle::drawPrimitive(PrimitiveElement element,
         // We try not to decorate the tree branch background unless you inherit from StyledItemDelegate
         // The reason for this is that a lot of code that relies on custom item delegates will look odd having
         // a gradient on the branch but a flat shaded color on the item itself.
-        QCommonStyle::drawPrimitive(element, option, painter, widget);
+        ParentStyle::drawPrimitive(element, option, painter, widget);
         if (!(option->state & State_Selected)) {
             break;
         } else {
@@ -1444,7 +1444,7 @@ void QGtkStyle::drawPrimitive(PrimitiveElement element,
             case QTabBar::TriangularWest:
             case QTabBar::TriangularSouth:
                 painter->restore();
-                QCommonStyle::drawPrimitive(element, option, painter, widget);
+                ParentStyle::drawPrimitive(element, option, painter, widget);
                 return;
             }
 
@@ -1458,7 +1458,7 @@ void QGtkStyle::drawPrimitive(PrimitiveElement element,
         break;
 
     default:
-        QCommonStyle::drawPrimitive(element, option, painter, widget);
+        ParentStyle::drawPrimitive(element, option, painter, widget);
     }
 }
 
@@ -1472,7 +1472,7 @@ void QGtkStyle::drawComplexControl(ComplexControl control, const QStyleOptionCom
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable()) {
-        QCommonStyle::drawComplexControl(control, option, painter, widget);
+        ParentStyle::drawComplexControl(control, option, painter, widget);
         return;
     }
 
@@ -2638,7 +2638,7 @@ void QGtkStyle::drawComplexControl(ComplexControl control, const QStyleOptionCom
 #endif // QT_NO_SLIDER
 
     default:
-        QCommonStyle::drawComplexControl(control, option, painter, widget);
+        ParentStyle::drawComplexControl(control, option, painter, widget);
 
         break;
     }
@@ -2656,7 +2656,7 @@ void QGtkStyle::drawControl(ControlElement element,
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable()) {
-        QCommonStyle::drawControl(element, option, painter, widget);
+        ParentStyle::drawControl(element, option, painter, widget);
         return;
     }
 
@@ -3024,7 +3024,7 @@ void QGtkStyle::drawControl(ControlElement element,
             item.palette.setBrush(QPalette::HighlightedText, highlightedTextColor);
             item.palette.setBrush(QPalette::Text, normalTextColor);
             item.palette.setBrush(QPalette::ButtonText, normalTextColor);
-            QCommonStyle::drawControl(element, &item, painter, widget);
+            ParentStyle::drawControl(element, &item, painter, widget);
 
             if (act) {
                 GtkShadowType shadowType = GTK_SHADOW_NONE;
@@ -3429,7 +3429,7 @@ void QGtkStyle::drawControl(ControlElement element,
                 break;
 
             default:
-                QCommonStyle::drawControl(element, option, painter, widget);
+                ParentStyle::drawControl(element, option, painter, widget);
                 break;
             }
 
@@ -3529,7 +3529,7 @@ void QGtkStyle::drawControl(ControlElement element,
         break;
 
     default:
-        QCommonStyle::drawControl(element, option, painter, widget);
+        ParentStyle::drawControl(element, option, painter, widget);
     }
 }
 
@@ -3541,9 +3541,9 @@ QRect QGtkStyle::subControlRect(ComplexControl control, const QStyleOptionComple
 {
     Q_D(const QGtkStyle);
 
-    QRect rect = QCommonStyle::subControlRect(control, option, subControl, widget);
+    QRect rect = ParentStyle::subControlRect(control, option, subControl, widget);
     if (!d->isThemeAvailable())
-        return QCommonStyle::subControlRect(control, option, subControl, widget);
+        return ParentStyle::subControlRect(control, option, subControl, widget);
 
     switch (control) {
     case CC_ScrollBar:
@@ -3807,7 +3807,7 @@ QRect QGtkStyle::subControlRect(ComplexControl control, const QStyleOptionComple
 
             GtkWidget *arrowWidget = d->gtkWidget(arrowPath);
             if (!arrowWidget)
-                return QCommonStyle::subControlRect(control, option, subControl, widget);
+                return ParentStyle::subControlRect(control, option, subControl, widget);
 
             GtkAllocation allocation;
             gtk_widget_get_allocation(arrowWidget, &allocation);
@@ -3856,7 +3856,7 @@ QSize QGtkStyle::sizeFromContents(ContentsType type, const QStyleOption *option,
 {
     Q_D(const QGtkStyle);
 
-    QSize newSize = QCommonStyle::sizeFromContents(type, option, size, widget);
+    QSize newSize = ParentStyle::sizeFromContents(type, option, size, widget);
     if (!d->isThemeAvailable())
         return newSize;
 
@@ -4041,7 +4041,7 @@ QPixmap QGtkStyle::standardPixmap(StandardPixmap sp, const QStyleOption *option,
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable())
-        return QCommonStyle::standardPixmap(sp, option, widget);
+        return ParentStyle::standardPixmap(sp, option, widget);
 
     QPixmap pixmap;
     switch (sp) {
@@ -4095,7 +4095,7 @@ QPixmap QGtkStyle::standardPixmap(StandardPixmap sp, const QStyleOption *option,
     case SP_MessageBoxCritical:
         return qt_gtk_get_icon(GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
     default:
-        return QCommonStyle::standardPixmap(sp, option, widget);
+        return ParentStyle::standardPixmap(sp, option, widget);
     }
     return pixmap;
 }
@@ -4110,7 +4110,7 @@ QIcon QGtkStyle::standardIcon(StandardPixmap standardIcon,
     Q_D(const QGtkStyle);
 
     if (!d->isThemeAvailable())
-        return QCommonStyle::standardIcon(standardIcon, option, widget);
+        return ParentStyle::standardIcon(standardIcon, option, widget);
     switch (standardIcon) {
     case SP_DialogDiscardButton:
         return qt_gtk_get_icon(GTK_STOCK_DELETE);
@@ -4139,7 +4139,7 @@ QIcon QGtkStyle::standardIcon(StandardPixmap standardIcon,
     case SP_MessageBoxCritical:
         return qt_gtk_get_icon(GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
     default:
-        return QCommonStyle::standardIcon(standardIcon, option, widget);
+        return ParentStyle::standardIcon(standardIcon, option, widget);
     }
 }
 
@@ -4149,7 +4149,7 @@ QRect QGtkStyle::subElementRect(SubElement element, const QStyleOption *option, 
 {
     Q_D(const QGtkStyle);
 
-    QRect r = QCommonStyle::subElementRect(element, option, widget);
+    QRect r = ParentStyle::subElementRect(element, option, widget);
     if (!d->isThemeAvailable())
         return r;
 
@@ -4202,7 +4202,7 @@ QRect QGtkStyle::subElementRect(SubElement element, const QStyleOption *option, 
 */
 QRect QGtkStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const
 {
-    return QCommonStyle::itemPixmapRect(r, flags, pixmap);
+    return ParentStyle::itemPixmapRect(r, flags, pixmap);
 }
 
 /*!
@@ -4211,7 +4211,7 @@ QRect QGtkStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap
 void QGtkStyle::drawItemPixmap(QPainter *painter, const QRect &rect,
                             int alignment, const QPixmap &pixmap) const
 {
-    QCommonStyle::drawItemPixmap(painter, rect, alignment, pixmap);
+    ParentStyle::drawItemPixmap(painter, rect, alignment, pixmap);
 }
 
 /*!
@@ -4220,7 +4220,7 @@ void QGtkStyle::drawItemPixmap(QPainter *painter, const QRect &rect,
 QStyle::SubControl QGtkStyle::hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
                               const QPoint &pt, const QWidget *w) const
 {
-    return QCommonStyle::hitTestComplexControl(cc, opt, pt, w);
+    return ParentStyle::hitTestComplexControl(cc, opt, pt, w);
 }
 
 /*!
@@ -4229,7 +4229,7 @@ QStyle::SubControl QGtkStyle::hitTestComplexControl(ComplexControl cc, const QSt
 QPixmap QGtkStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                         const QStyleOption *opt) const
 {
-    return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
+    return ParentStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 
 /*!
@@ -4238,7 +4238,7 @@ QPixmap QGtkStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixm
 void QGtkStyle::drawItemText(QPainter *painter, const QRect &rect, int alignment, const QPalette &pal,
                                     bool enabled, const QString& text, QPalette::ColorRole textRole) const
 {
-    return QCommonStyle::drawItemText(painter, rect, alignment, pal, enabled, text, textRole);
+    return ParentStyle::drawItemText(painter, rect, alignment, pal, enabled, text, textRole);
 }
 
 QT_END_NAMESPACE
