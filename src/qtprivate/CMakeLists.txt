@@ -3,7 +3,9 @@ set(private_SRCS
     qstylehelper.cpp
     qcommonstyle.cpp
     qdrawhelper_ssse3.cpp
-    qdrawhelper_sse4.cpp)
+    qdrawhelper_sse4.cpp
+    qfontmetrics.cpp
+    qsidebar.cpp)
 
 add_library(private STATIC ${private_SRCS})
 target_include_directories(private PRIVATE
