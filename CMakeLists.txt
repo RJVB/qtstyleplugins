@@ -21,7 +21,7 @@ if(ENABLE_KDE)
     add_feature_info("Use a private copy of the KStyle class (required as long as KStyle isn't updated)" USE_PRIVATE_KSTYLE "")
 endif()
 
-find_package(ECM 5.60.0  NO_MODULE)
+find_package(ECM 5.54.0  NO_MODULE)
 
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DIR}/cmake)
@@ -61,7 +61,7 @@ string(REPLACE "-Wdate-time" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_FROM_BYTEARRAY)
 
 if(ENABLE_KDE)
-    set(KF5_DEP_VERSION "5.60.0") # handled by release scripts
+    set(KF5_DEP_VERSION "5.54.0") # handled by release scripts
 
     include(ECMSetupVersion)
     ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KFUSION

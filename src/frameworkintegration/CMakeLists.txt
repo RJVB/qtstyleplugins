@@ -1,11 +1,11 @@
 # cmake_minimum_required(VERSION 3.5)
 
 set(KF5_VERSION "5.63.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.60.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.54.0") # handled by release scripts
 project(FrameworkIntegration VERSION ${KF5_VERSION})
 
 include(FeatureSummary)
-find_package(ECM 5.60.0  NO_MODULE)
+find_package(ECM 5.54.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -47,8 +47,8 @@ find_package(KF5Notifications ${KF5_DEP_VERSION} REQUIRED)
 #    find_package(packagekitqt5)
 #    find_package(AppStreamQt 0.10.4)
 # endif()
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050d00)
-add_definitions(-DQT_NO_FOREACH)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050900)
+# add_definitions(-DQT_NO_FOREACH)
 add_subdirectory(src)
 # if (BUILD_TESTING)
 #     add_subdirectory(autotests)
