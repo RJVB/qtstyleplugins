@@ -98,13 +98,17 @@ Q_WIDGETS_EXPORT qreal dpi(const QStyleOption *option)
 #ifndef Q_OS_DARWIN
     // Prioritize the application override, except for on macOS where
     // we have historically not supported the AA_Use96Dpi flag.
-    if (QCoreApplication::testAttribute(Qt::AA_Use96Dpi))
+    if (QCoreApplication::testAttribute(Qt::AA_Use96Dpi)) {
+//         qWarning() << "app AA_Use96Dpi override";
         return 96;
+    }
 #endif
 
     // Expect that QStyleOption::QFontMetrics::QFont has the correct DPI set
-    if (option)
+    if (option) {
+//         qWarning() << "Returning font DPI" << option->fontMetrics.fontDpi();
         return option->fontMetrics.fontDpi();
+    }
 
     // Fall back to historical Qt behavior: hardocded 72 DPI on mac,
     // primary screen DPI on other platforms.
