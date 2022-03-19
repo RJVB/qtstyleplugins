@@ -38,13 +38,6 @@
 ****************************************************************************/
 
 #ifndef QCOMMONSTYLE_H
-
-// #include <qglobal.h>
-#if 0 // QT_VERSION >= QT_VERSION_CHECK(5,12,6)
-#warning "including installed qcommonstyle.h"
-#include <QtWidgets/qcommonstyle.h>
-#else
-
 #define QCOMMONSTYLE_H
 
 #ifdef __GNUC__
@@ -114,7 +107,5 @@ private:
 };
 
 QT_END_NAMESPACE
-
-#endif // Qt 5.12
 
 #endif // QCOMMONSTYLE_H
